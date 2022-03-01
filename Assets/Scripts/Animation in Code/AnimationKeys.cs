@@ -6,22 +6,22 @@ using NaughtyAttributes;
 [CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/AnimationKeys", order = 1)]
 public class AnimationKeys : ScriptableObject
 {
-    public string animationName;
-    public List<KeyData> keyFrames = new List<KeyData>();
+    // public string animationName;
+    // public List<KeyData> keyFrames = new List<KeyData>();
 
-    [System.Serializable]
-    public struct KeyData{
-        public float keyTimes;
-        public Vector3 value;
-        /*
-        public KeyData(int frame, float keyTimes, Vector3 value){
+    // [System.Serializable]
+    // public struct KeyData{
+    //     public float keyTimes;
+    //     public Vector3 value;
+    //     /*
+    //     public KeyData(int frame, float keyTimes, Vector3 value){
 
-        }
-        */
-    }
+    //     }
+    //     */
+    // }
 
-    public bool loop;
-    [EnableIf("loop")] public float loopDelay;
+    // public bool loop;
+    // [EnableIf("loop")] public float loopDelay;
 
     public List<AnimationComponent> components = new List<AnimationComponent>();
 
@@ -44,15 +44,9 @@ public class AnimationComponent{
 
     public AnimationTypes animType;
 
-    [ShowIf("animType", AnimationTypes.Scale)][AllowNesting] public bool useRatio = true;
-    [ShowIf("animType", AnimationTypes.Scale)][EnableIf("useRatio")][AllowNesting] public Vector3 ratio = new Vector3(1f,2f, 1f);
-    [ShowIf("animType", AnimationTypes.Scale)][DisableIf("useRatio")][AllowNesting] public Vector3 startScale = new Vector3(1f,2f, 1f);
-    [ShowIf("animType", AnimationTypes.Scale)][DisableIf("useRatio")][AllowNesting] public Vector3 endScale = new Vector3(1f,2f, 1f);
-
-    [ShowIf("animType", AnimationTypes.Translate)][AllowNesting] public bool useRelative = true;
-    [ShowIf("animType", AnimationTypes.Translate)][EnableIf("useRelative")][AllowNesting] public Vector3 relativePosition = new Vector3(0f,100f, 0f);
-    [ShowIf("animType", AnimationTypes.Translate)][DisableIf("useRelative")][AllowNesting] public Vector3 startPosition = new Vector3(0f,0f, 0f);
-    [ShowIf("animType", AnimationTypes.Translate)][DisableIf("useRelative")][AllowNesting] public Vector3 endPosition = new Vector3(0f,0f, 0f);
+    [ShowIf("animType", AnimationTypes.Scale)][AllowNesting] public Vector3 ratio = new Vector3(1f,1f, 1f);
+    
+    [ShowIf("animType", AnimationTypes.Translate)][AllowNesting] public Vector3 relativePosition = new Vector3(0f,0f, 0f);
 
     [ShowIf("animType", AnimationTypes.Rotate)][AllowNesting] public Vector3 degrees = new Vector3(0f,90f, 0f);
 
@@ -61,8 +55,8 @@ public class AnimationComponent{
 
     public EasingTypes easeType;
 
-    [Label("Duration (ms)")][AllowNesting] public int duration = 1000;
-    [Label("Delay (ms)")][AllowNesting] public int delay = 0;
+    [Label("Duration (ms)")][AllowNesting] public float duration = 1000f;
+    [Label("Delay (ms)")][AllowNesting] public float delay = 0f;
     public int bounces = 4;
     public int stiffness = 3;
 

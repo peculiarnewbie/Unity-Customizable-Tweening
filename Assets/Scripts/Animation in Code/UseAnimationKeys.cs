@@ -17,7 +17,7 @@ public class UseAnimationKeys : MonoBehaviour
     public bool slowMo;
     [EnableIf("slowMo")] public float slowMultiplier;
 
-    [SerializeField] private UIDocument mainUI;
+    [SerializeField] private UnityEngine.UIElements.UIDocument mainUI;
     public Button playAnimation;
     public string buttonName;
 
@@ -32,9 +32,11 @@ public class UseAnimationKeys : MonoBehaviour
     float duration;
     float progress;
     Transform initialValues;
-    Vector3 oldValue;
-    Vector3 targetValue;
+    Vector3[] oldValue = new Vector3[4];
     EaseMethods ease;
+    List<float> componentDuration = new List<float>();
+    List<float> componentDelay = new List<float>();
+    List<ComponentResult> results = new List<ComponentResult>();
 
     private void Start() {
         componentList = animationObject.components;
@@ -54,8 +56,8 @@ public class UseAnimationKeys : MonoBehaviour
 
         if(progress > 0f){
 
-            targetObject.localScale = Vector3.LerpUnclamped(oldValue, targetValue, ease.Smooth(EaseTypes.Elastic, (duration-progress)/duration));
-
+            //targetObject.localScale = Vector3.LerpUnclamped(oldValue, targetValue, ease.Smooth(EaseTypes.Elastic, (duration-progress)/duration));
+            RunScaleObject();
             progress -= Time.deltaTime;
         }
         else isPlaying = !isPlaying;
@@ -67,62 +69,112 @@ public class UseAnimationKeys : MonoBehaviour
         initialValues = targetObject.transform;
         duration = 0f;  //resets duration
 
-        foreach(AnimationComponent component in animationObject.components){
-            switch(component.animType){
-                case AnimationTypes.Scale:
-                {
-                    ScaleObject(component, component.useRatio);
-                }
-                break;
-                case AnimationTypes.Translate:
-                {
-                    TranslateObject(component, component.useRelative);
-                }
-                break;
-                case AnimationTypes.Rotate:
-                {
-                    RotateObject(component);
-                }
-                break;
-                case AnimationTypes.Skew:
-                {
-                    SkewObject(component);
-                }
-                break;
-            }
-            if(duration < (component.duration + component.delay)) duration = (component.duration + component.delay)/1000;
+        results.Clear();
+
+        oldValue[0] = targetObject.transform.localScale;
+        oldValue[1] = targetObject.transform.localPosition;
+
+        foreach(AnimationComponent component in componentList){
+            var serializedComponent = JsonUtility.ToJson(component); 
+            ComponentResult c  = JsonUtility.FromJson<ComponentResult>(serializedComponent);
+            c.MakeTemp();
+            results.Add(c);
+            //CopyComponent(component);
+
+            if(duration < (component.duration + component.delay)) duration = (component.duration + component.delay)/1000f;
             progress = duration;
         }
         
         isPlaying = true;
     }
 
-    private void ScaleObject(AnimationComponent values, bool isRatio){
-        if(isRatio){
-            oldValue = targetObject.transform.localScale;
-            targetValue = Vector3.Scale(oldValue, values.ratio);
-        }
-        else{
-            oldValue = values.startScale;
-            targetValue = values.endScale;
-        }
+    private void CopyComponent(AnimationComponent values){
+        ComponentResult temp = new ComponentResult();
+        temp.tempDuration = temp.duration = values.duration/1000f;
+        temp.tempDelay = temp.delay = values.delay/1000f;
+        temp.tempRatio = temp.ratio = values.ratio;
+        results.Add(temp);
     }
+
+    
 
     private void RunScaleObject(){
 
+        Vector3 totalRatio = new Vector3(1f,1f,1f);
+        Vector3 totalRelative = new Vector3(0f, 0f, 0f);
+        float componentProgress;
+
+        foreach(ComponentResult result in results){
+            int flag = (int) result.animType;
+            if(result.tempDelay > 0){
+                result.tempDelay -= Time.deltaTime;
+                continue;
+            } 
+            else if(result.tempDuration > 0){
+
+                componentProgress = (result.duration - result.tempDuration) / (result.duration);
+                result.tempDuration -= Time.deltaTime;
+
+                switch(result.animType){
+                    case AnimationTypes.Scale: 
+                        {result.tempRatio = Vector3.LerpUnclamped(Vector3.one, result.ratio, ease.Smooth(EaseTypes.Elastic, componentProgress));}
+                    break;
+                    case AnimationTypes.Translate: 
+                        {result.tempRelative = Vector3.LerpUnclamped(Vector3.zero, result.relativePosition, ease.Smooth(EaseTypes.Elastic, componentProgress));}
+                        flag = 1;
+                    break;
+                    case AnimationTypes.Rotate:
+                    {
+                        
+                    }
+                    break;
+                    case AnimationTypes.Skew:
+                    { 
+                        
+                    }
+                    break;
+                }
+
+            }
+            if(flag == 0) totalRatio = Vector3.Scale(totalRatio, result.tempRatio);
+            else if(flag == 1) totalRelative += result.tempRelative;
+        }
+        targetObject.transform.localScale = Vector3.Scale(oldValue[0], totalRatio);
+        targetObject.transform.localPosition = oldValue[1] + totalRelative;
+        
     }
 
-    private void TranslateObject(AnimationComponent values, bool isRelative){
-        if(isRelative){
-            oldValue = targetObject.transform.position;
-            targetValue = oldValue + values.relativePosition;
-        }
-        else{
-            oldValue = values.startPosition;
-            targetValue = values.endPosition;
-        }
-
+    private Vector3 ScaleObject(ComponentResult values, bool isRatio){
+        
+        return values.tempRatio;
     }
+
+
+    private void RunTranslateObject(){
+
+        Vector3 totalRealtive = new Vector3(0f, 0f, 0f);
+
+        foreach(ComponentResult result in results){
+
+        }
+    }
+
+
+    public class ComponentResult : AnimationComponent{
+        public float tempDuration;
+        public float tempDelay;
+        public Vector3 tempRelative;
+        public Vector3 tempRatio = new Vector3(1f, 1f, 1f);
+
+        public void MakeTemp(){
+            duration = tempDuration = duration/1000f;
+            delay = tempDelay = delay/1000f;
+            tempRatio = ratio;
+            tempRelative = relativePosition;
+        }
+    }
+
+    
     private void RotateObject(AnimationComponent values){
 
     }
