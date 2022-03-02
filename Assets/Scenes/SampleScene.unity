@@ -232,10 +232,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetObject: {fileID: 901766952}
   animationObject: {fileID: 11400000, guid: d3f43c742f17c054b9c41c878baaf9d1, type: 2}
+  isContinuous: 1
   loop: 0
   loopDelay: 50
-  slowMo: 0
-  slowMultiplier: 0
+  timeStretch: 0
+  timeMultiplier: 0
   mainUI: {fileID: 1284502075}
   buttonName: ratio-button
 --- !u!65 &901766955
@@ -507,10 +508,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetObject: {fileID: 1041021390}
   animationObject: {fileID: 11400000, guid: 805d4efcc93bd0e43b90c4f4df2f37f6, type: 2}
+  isContinuous: 0
   loop: 0
-  loopDelay: 50
-  slowMo: 0
-  slowMultiplier: 0
+  loopDelay: 0
+  timeStretch: 1
+  timeMultiplier: 0.5
   mainUI: {fileID: 1284502075}
   buttonName: animate-button
 --- !u!114 &1041021395

@@ -26,8 +26,6 @@ public class AnimationKeys : ScriptableObject
     public List<AnimationComponent> components = new List<AnimationComponent>();
 
     public AnimationComponent defaultVaules;
-    
-    public NestingTest nest1;
 
     [Button(enabledMode: EButtonEnableMode.Always)]
     private void UpdateValues(){
@@ -60,12 +58,6 @@ public class AnimationComponent{
     public int bounces = 4;
     public int stiffness = 3;
 
-}
-
-[System.Serializable]
-public class NestingTest{
-    [InfoBox("Error", EInfoBoxType.Error)]
-        public int error;
 }
 
 public enum AnimationTypes

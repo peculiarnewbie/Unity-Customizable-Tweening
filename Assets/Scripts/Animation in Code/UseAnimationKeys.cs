@@ -11,13 +11,16 @@ public class UseAnimationKeys : MonoBehaviour
 
     private List<AnimationComponent> componentList;
 
-    public bool loop;
+    public bool isContinuous = true;
+
+    public bool loop = false;
     [EnableIf("loop")] public float loopDelay;
+    float tempLoopDelay;
 
-    public bool slowMo;
-    [EnableIf("slowMo")] public float slowMultiplier;
+    public bool timeStretch = false;
+    [EnableIf("timeStretch")] public float timeMultiplier;
 
-    [SerializeField] private UnityEngine.UIElements.UIDocument mainUI;
+    [SerializeField] private UIDocument mainUI;
     public Button playAnimation;
     public string buttonName;
 
@@ -29,6 +32,7 @@ public class UseAnimationKeys : MonoBehaviour
     float omega;
 
     bool isPlaying;
+    bool isFirst = true;
     float duration;
     float progress;
     Transform initialValues;
@@ -49,6 +53,8 @@ public class UseAnimationKeys : MonoBehaviour
 
         playAnimation = mainUI.rootVisualElement.Q<Button>(buttonName);
         playAnimation.clicked += PlayAnimation;
+
+        tempLoopDelay = loopDelay;
     }
 
     private void Update() {
@@ -60,7 +66,10 @@ public class UseAnimationKeys : MonoBehaviour
             RunScaleObject();
             progress -= Time.deltaTime;
         }
+        else if(tempLoopDelay > 0) tempLoopDelay -= Time.deltaTime;
+        else if(loop) ResetAnimation(results);
         else isPlaying = !isPlaying;
+        Debug.Log(progress);
     }
 
     [Button(enabledMode: EButtonEnableMode.Always)]
@@ -71,32 +80,30 @@ public class UseAnimationKeys : MonoBehaviour
 
         results.Clear();
 
-        oldValue[0] = targetObject.transform.localScale;
-        oldValue[1] = targetObject.transform.localPosition;
+        if(isFirst || isContinuous){GetCurrentTransform(); isFirst = false;}
+        
 
         foreach(AnimationComponent component in componentList){
+            if(!timeStretch) timeMultiplier = 1f;
+
             var serializedComponent = JsonUtility.ToJson(component); 
             ComponentResult c  = JsonUtility.FromJson<ComponentResult>(serializedComponent);
-            c.MakeTemp();
+            c.MakeTemp(timeMultiplier);
             results.Add(c);
             //CopyComponent(component);
 
             if(duration < (component.duration + component.delay)) duration = (component.duration + component.delay)/1000f;
-            progress = duration;
+            duration = progress = duration*timeMultiplier;
         }
         
         isPlaying = true;
     }
 
-    private void CopyComponent(AnimationComponent values){
-        ComponentResult temp = new ComponentResult();
-        temp.tempDuration = temp.duration = values.duration/1000f;
-        temp.tempDelay = temp.delay = values.delay/1000f;
-        temp.tempRatio = temp.ratio = values.ratio;
-        results.Add(temp);
+    private void GetCurrentTransform(){
+        oldValue[0] = targetObject.transform.localScale;
+        oldValue[1] = targetObject.transform.localPosition;
+        oldValue[2] = targetObject.transform.localRotation.eulerAngles;
     }
-
-    
 
     private void RunScaleObject(){
 
@@ -144,11 +151,6 @@ public class UseAnimationKeys : MonoBehaviour
         
     }
 
-    private Vector3 ScaleObject(ComponentResult values, bool isRatio){
-        
-        return values.tempRatio;
-    }
-
 
     private void RunTranslateObject(){
 
@@ -159,6 +161,15 @@ public class UseAnimationKeys : MonoBehaviour
         }
     }
 
+    private void ResetAnimation(List<ComponentResult> components){
+        foreach(ComponentResult component in components){
+            component.ResetTemp();
+        }
+        progress = duration;
+        tempLoopDelay = loopDelay;
+        if(isContinuous) GetCurrentTransform();
+    }
+
 
     public class ComponentResult : AnimationComponent{
         public float tempDuration;
@@ -166,12 +177,18 @@ public class UseAnimationKeys : MonoBehaviour
         public Vector3 tempRelative;
         public Vector3 tempRatio = new Vector3(1f, 1f, 1f);
 
-        public void MakeTemp(){
-            duration = tempDuration = duration/1000f;
-            delay = tempDelay = delay/1000f;
+        public void MakeTemp(float multiplier){
+            duration = duration*multiplier/1000f;
+            delay = delay*multiplier/1000f;
+            ResetTemp();
+        }
+        public void ResetTemp(){
+            tempDuration = duration;
+            tempDelay = delay;
             tempRatio = ratio;
             tempRelative = relativePosition;
         }
+
     }
 
     
