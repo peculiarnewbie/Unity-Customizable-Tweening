@@ -12,38 +12,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e38ac0dff8f318444a3a6e62174b510e, type: 3}
   m_Name: Animation
   m_EditorClassIdentifier: 
-  animationName: 
-  keyFrames: []
-  loop: 0
-  loopDelay: 0
   components:
-  - animType: 0
-    useRatio: 1
+  - animType: 2
     ratio: {x: 2, y: 2, z: 1}
-    startScale: {x: 1, y: 1, z: 1}
-    endScale: {x: 2, y: 2, z: 1}
-    useRelative: 1
     relativePosition: {x: 0, y: 0, z: 0}
-    startPosition: {x: 0, y: 0, z: 0}
-    endPosition: {x: 0, y: 0, z: 0}
-    degrees: {x: 0, y: 90, z: 0}
+    degrees: {x: 0, y: 90, z: 40}
     xDegree: {x: 0, y: 20}
     yDegree: {x: 0, y: 0}
     easeType: 0
     duration: 1000
     delay: 0
+    bounces: 4
+    stiffness: 3
+  - animType: 2
+    ratio: {x: 2, y: 2, z: 1}
+    relativePosition: {x: 0, y: 0, z: 0}
+    degrees: {x: 20, y: 0, z: 40}
+    xDegree: {x: 0, y: 20}
+    yDegree: {x: 0, y: 0}
+    easeType: 0
+    duration: 1000
+    delay: 500
     bounces: 4
     stiffness: 3
   defaultVaules:
     animType: 0
-    useRatio: 0
     ratio: {x: 1, y: 2, z: 1}
-    startScale: {x: 1, y: 1, z: 1}
-    endScale: {x: 2, y: 2, z: 1}
-    useRelative: 1
     relativePosition: {x: 0, y: 100, z: 0}
-    startPosition: {x: 0, y: 0, z: 0}
-    endPosition: {x: 0, y: 0, z: 0}
     degrees: {x: 0, y: 90, z: 0}
     xDegree: {x: 0, y: 20}
     yDegree: {x: 0, y: 0}
@@ -52,5 +47,3 @@ MonoBehaviour:
     delay: 0
     bounces: 4
     stiffness: 3
-  nest1:
-    error: 0

@@ -18,7 +18,7 @@ namespace NaughtyAttributes.Test
         [ReorderableList]
         public int[] showIfAny;
 
-        [ShowIf("enum1", ShowIfEnum.Case1)]
+        [ShowIf("enum1", ShowIfEnum.Case0)]
         [ReorderableList]
         public int[] showIfEnum;
 

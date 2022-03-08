@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -98,7 +98,8 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_LightingSettings: {fileID: 4890085278179872738, guid: 98ee975b74776234986f4d35f14c4ccc, type: 2}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: 98ee975b74776234986f4d35f14c4ccc,
+    type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -199,13 +200,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enable1: 0
   enable2: 0
-  enum1: 1
-  enum2: 3
+  enum1: 0
+  enum2: 0
   enableIfAll: 
   enableIfAny: 
   enableIfEnum: 
-  enableIfEnumFlag: 0000000000000000
-  enableIfEnumFlagMulti: 00000000
+  enableIfEnumFlag: 
+  enableIfEnumFlagMulti: 
   nest1:
     enable1: 1
     enable2: 0
@@ -240,9 +241,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   disable1: 0
   disable2: 0
-  enum1: 1
+  enum1: 0
   enum2: 0
-  disableIfAll: 00000000
+  disableIfAll: 
   disableIfAny: 
   disableIfEnum: 
   disableIfEnumFlag: 
@@ -507,7 +508,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd67fbde6acdd6a44944f12e507067c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minMaxSlider0: {x: 0, y: 0.5514861}
+  minMaxSlider0: {x: 0, y: 0.5}
   nest1:
     minMaxSlider1: {x: 0.25, y: 0.75}
     nest2:
@@ -628,7 +629,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3855e37cd6b01194e8166573c7c4b37d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  intValue: 2
+  intValue: 1
   nest1:
     stringValue: A
     nest2:
@@ -676,9 +677,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 281a85803caf74a459439020a0840fa4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scene0: SampleScene
+  scene0: DemoScene
   nest1:
-    scene1: SampleScene
+    scene1: DemoScene
     nest2:
       scene2: 0
 --- !u!1 &933563384
@@ -731,7 +732,8 @@ MonoBehaviour:
     prefab1: {fileID: 1981131855061102, guid: 7ec354ef3daae7641b7a3fa5e1fe0c81, type: 3}
     nest2:
       sprite2: {fileID: 21300000, guid: 005888ede18a58e4db8d069cfa3007cb, type: 3}
-      prefab2: {fileID: 1981131855061102, guid: 7ec354ef3daae7641b7a3fa5e1fe0c81, type: 3}
+      prefab2: {fileID: 1981131855061102, guid: 7ec354ef3daae7641b7a3fa5e1fe0c81,
+        type: 3}
 --- !u!1 &948946033
 GameObject:
   m_ObjectHideFlags: 0
@@ -1176,11 +1178,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7488af014527ebf42af5c4fc4d5f4f5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  int0: 1
+  int0: 0
   nest1:
     int1: 0
     nest2:
-      vector2: {x: 0.17786098, y: 0.6778609}
+      vector2: {x: 0.25, y: 0.75}
 --- !u!1 &1380469384
 GameObject:
   m_ObjectHideFlags: 0
@@ -1421,7 +1423,7 @@ MonoBehaviour:
   show1: 0
   show2: 0
   enum1: 0
-  enum2: 1
+  enum2: 0
   showIfAll: 
   showIfAny: 
   showIfEnum: 
@@ -1548,7 +1550,6 @@ GameObject:
   - component: {fileID: 1591883665}
   - component: {fileID: 1591883664}
   - component: {fileID: 1591883663}
-  - component: {fileID: 1591883667}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1629,38 +1630,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1591883667
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1591883662}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_RenderShadows: 1
-  m_RequiresDepthTextureOption: 2
-  m_RequiresOpaqueTextureOption: 2
-  m_CameraType: 0
-  m_Cameras: []
-  m_RendererIndex: -1
-  m_VolumeLayerMask:
-    serializedVersion: 2
-    m_Bits: 1
-  m_VolumeTrigger: {fileID: 0}
-  m_RenderPostProcessing: 0
-  m_Antialiasing: 0
-  m_AntialiasingQuality: 2
-  m_StopNaN: 0
-  m_Dithering: 0
-  m_ClearDepth: 1
-  m_AllowXRRendering: 1
-  m_RequiresDepthTexture: 0
-  m_RequiresColorTexture: 0
-  m_Version: 2
 --- !u!1 &1609261819
 GameObject:
   m_ObjectHideFlags: 0
@@ -1909,12 +1878,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c93fde7cd79390148ac576c3a159a77b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  intArray: 00000000040000000400000004000000
+  intArray: 020000000300000001000000
   vectorList:
   - {x: 2, y: 2, z: 2}
   - {x: 3, y: 3, z: 3}
-  - {x: 1, y: 1, z: 1}
-  - {x: 1, y: 1, z: 1}
   - {x: 1, y: 1, z: 1}
   structList:
   - Int: 2
@@ -1926,20 +1893,9 @@ MonoBehaviour:
   - Int: 1
     Float: 1
     Vector: {x: 1, y: 1, z: 1}
-  - Int: 1
-    Float: 1
-    Vector: {x: 1, y: 1, z: 1}
-  - Int: 1
-    Float: 1
-    Vector: {x: 1, y: 1, z: 1}
-  gameObjectsList:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  transformsList:
-  - {fileID: 0}
-  monoBehavioursList:
-  - {fileID: 0}
+  gameObjectsList: []
+  transformsList: []
+  monoBehavioursList: []
 --- !u!1 &1784643784
 GameObject:
   m_ObjectHideFlags: 0
@@ -2036,11 +1992,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff1df679e5b32f64bb106752c63933fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  int0: 10
+  int0: 0
   nest1:
-    int1: 5
+    int1: 0
     nest2:
-      int2: 1
+      int2: 0
 --- !u!1 &1989156458
 GameObject:
   m_ObjectHideFlags: 0
@@ -2175,7 +2131,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b592f12a9f69ac3408f6f870762232c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myInt: 4
+  myInt: 0
 --- !u!1 &2082563172
 GameObject:
   m_ObjectHideFlags: 0
