@@ -29,11 +29,36 @@ public class EaseMethods : MonoBehaviour
 				}
 				break;
 
+				// case EaseTypes.Elastic:
+				// {
+				// 	var angle   = x * Mathf.PI * 4.0f;
+				// 	var weightA = 1.0f - Mathf.Pow(x, 0.125f);
+				// 	var weightB = 1.0f - Mathf.Pow(1.0f - x, 8.0f);
+
+				// 	x = Mathf.LerpUnclamped(0.0f, 1.0f - Mathf.Cos(angle) * weightA, weightB);
+				// }
+				// break;
+
 				case EaseTypes.Elastic:
 				{
-					var angle   = x * Mathf.PI * 4.0f;
-					var weightA = 1.0f - Mathf.Pow(x, 0.125f);
-					var weightB = 1.0f - Mathf.Pow(1.0f - x, 8.0f);
+					float b = 4f;
+					float s = 3f;
+					float alpha = s / 100f;
+
+					float treshold = 0.005f / Mathf.Pow(10, s);
+					float limit = Mathf.Floor(Mathf.Log(treshold) / -alpha);
+					float omega = (b + 0.5f) * Mathf.PI/limit;
+
+					float t = x * limit;
+
+					// x = 1 - Mathf.Pow((float)System.Math.E, alpha*t) * Mathf.Cos(omega * t);
+					// x = Mathf.LerpUnclamped(0.0f, 1.0f, x);
+					// Debug.Log(Mathf.Log(0.000005f, 10f));
+
+
+					var angle   = x * Mathf.PI * 1.0f * b;
+					var weightA = 1.0f - Mathf.Pow(x, 0.125f / s);
+					var weightB = 1.0f - Mathf.Pow(1.0f - x, 8.0f * s);
 
 					x = Mathf.LerpUnclamped(0.0f, 1.0f - Mathf.Cos(angle) * weightA, weightB);
 				}
