@@ -40,6 +40,7 @@ public class UseAnimationKeys : MonoBehaviour
     List<float> componentDuration = new List<float>();
     List<float> componentDelay = new List<float>();
     List<ComponentResult> results = new List<ComponentResult>();
+    Coroutine animationCo;
 
     private void Start() {
         ease = new EaseMethods();
@@ -54,24 +55,43 @@ public class UseAnimationKeys : MonoBehaviour
         tempDelay = delayOverall;
     }
 
-    private void Update() {
-        if(!isPlaying) return;
+    // private void Update() {
+    //     if(!isPlaying) return;
 
-        if(tempDelay > 0f){
-            tempDelay -= Time.deltaTime;
-            return;
-        }
+    //     //
+    //     if(tempDelay > 0f){
+    //         tempDelay -= Time.deltaTime;
+    //         return;
+    //     }
 
-        if(progress > 0f){
-            TransformObject();
-            progress -= Time.deltaTime;
+    //     if(progress > 0f){
+    //         TransformObject();
+    //         progress -= Time.deltaTime;
+    //     }
+    //     else if(tempLoopDelay > 0) tempLoopDelay -= Time.deltaTime;
+    //     else if(loop) ResetAnimation(results);
+    //     else isPlaying = !isPlaying;
+    // }
+
+    // Coroutine version of current Update
+    IEnumerator AnimationCoroutine(){
+        while(true){
+            if(tempDelay > 0f){
+                tempDelay -= Time.deltaTime;
+                yield return null;
+            }
+
+            if(progress > 0f){
+                TransformObject();
+                progress -= Time.deltaTime;
+            }
+            else if(tempLoopDelay > 0) tempLoopDelay -= Time.deltaTime;
+            else if(loop) ResetAnimation(results);
+            else yield break;
+            yield return null;
         }
-        else if(tempLoopDelay > 0) tempLoopDelay -= Time.deltaTime;
-        else if(loop) ResetAnimation(results);
-        else isPlaying = !isPlaying;
     }
 
-    [Button(enabledMode: EButtonEnableMode.Always)]
     public void PlayAnimation(){
 
         initialValues = targetObject.transform;
@@ -95,7 +115,8 @@ public class UseAnimationKeys : MonoBehaviour
             duration = progress = duration*timeMultiplier;
         }
         
-        isPlaying = true;
+        if(animationCo != null) StopCoroutine(animationCo);
+        animationCo = StartCoroutine(AnimationCoroutine());
     }
 
     private void GetCurrentTransform(){

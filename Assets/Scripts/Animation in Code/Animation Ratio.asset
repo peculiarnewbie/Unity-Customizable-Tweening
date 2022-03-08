@@ -36,9 +36,20 @@ MonoBehaviour:
     bounces: 4
     stiffness: 3
   - animType: 0
-    ratio: {x: 2, y: 2, z: 1}
+    ratio: {x: 3, y: 3, z: 1}
     relativePosition: {x: 0, y: 3, z: 0}
     degrees: {x: 0, y: 0, z: 0}
+    xDegree: {x: 0, y: 0}
+    yDegree: {x: 0, y: 0}
+    easeType: 0
+    duration: 1000
+    delay: 1000
+    bounces: 4
+    stiffness: 3
+  - animType: 2
+    ratio: {x: 3, y: 3, z: 1}
+    relativePosition: {x: 0, y: 3, z: 0}
+    degrees: {x: 45, y: 90, z: 0}
     xDegree: {x: 0, y: 0}
     yDegree: {x: 0, y: 0}
     easeType: 0
