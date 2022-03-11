@@ -14,9 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   components:
   - animType: 0
+    isRandom: 0
     ratio: {x: 0.4, y: 0.4, z: 1}
     relativePosition: {x: 0, y: 0, z: 0}
     degrees: {x: 0, y: 0, z: 0}
+    Range: {x: 0, y: 0, z: 0}
     xDegree: {x: 0, y: 0}
     yDegree: {x: 0, y: 0}
     easeType: 0
@@ -25,9 +27,11 @@ MonoBehaviour:
     bounces: 4
     stiffness: 3
   - animType: 1
+    isRandom: 0
     ratio: {x: 2, y: 2, z: 1}
     relativePosition: {x: 0, y: 2, z: 0}
     degrees: {x: 0, y: 0, z: 0}
+    Range: {x: 0, y: 0, z: 0}
     xDegree: {x: 0, y: 0}
     yDegree: {x: 0, y: 0}
     easeType: 0
@@ -36,9 +40,11 @@ MonoBehaviour:
     bounces: 4
     stiffness: 3
   - animType: 0
+    isRandom: 0
     ratio: {x: 3, y: 3, z: 1}
     relativePosition: {x: 0, y: 3, z: 0}
     degrees: {x: 0, y: 0, z: 0}
+    Range: {x: 0, y: 0, z: 0}
     xDegree: {x: 0, y: 0}
     yDegree: {x: 0, y: 0}
     easeType: 0
@@ -47,9 +53,11 @@ MonoBehaviour:
     bounces: 4
     stiffness: 3
   - animType: 2
+    isRandom: 0
     ratio: {x: 3, y: 3, z: 1}
     relativePosition: {x: 0, y: 3, z: 0}
     degrees: {x: 45, y: 90, z: 0}
+    Range: {x: 0, y: 0, z: 0}
     xDegree: {x: 0, y: 0}
     yDegree: {x: 0, y: 0}
     easeType: 0
@@ -59,9 +67,11 @@ MonoBehaviour:
     stiffness: 3
   defaultVaules:
     animType: 0
+    isRandom: 0
     ratio: {x: 1, y: 2, z: 1}
     relativePosition: {x: 0, y: 100, z: 0}
     degrees: {x: 0, y: 90, z: 0}
+    Range: {x: 0, y: 0, z: 0}
     xDegree: {x: 0, y: 20}
     yDegree: {x: 0, y: 0}
     easeType: 0

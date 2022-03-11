@@ -42,11 +42,14 @@ public class AnimationComponent{
 
     public AnimationTypes animType;
 
+    public bool isRandom = false;
     [ShowIf("animType", AnimationTypes.Scale)][AllowNesting] public Vector3 ratio = new Vector3(1f,1f, 1f);
     
     [ShowIf("animType", AnimationTypes.Translate)][AllowNesting] public Vector3 relativePosition = new Vector3(0f,0f, 0f);
 
     [ShowIf("animType", AnimationTypes.Rotate)][AllowNesting] public Vector3 degrees = new Vector3(0f,90f, 0f);
+
+    [ShowIf(EConditionOperator.Or, "isRandom")][AllowNesting] public Vector3 Range = new Vector3(0f,0f, 0f);
 
     [ShowIf("animType", AnimationTypes.Skew)][AllowNesting] public Vector2 xDegree = new Vector2(0f,20f);
     [ShowIf("animType", AnimationTypes.Skew)][AllowNesting] public Vector2 yDegree = new Vector2(0f,0f);

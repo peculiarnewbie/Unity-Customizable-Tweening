@@ -19,6 +19,7 @@ public class UseAnimationKeys : MonoBehaviour
 
     public bool timeStretch = false;
     [EnableIf("timeStretch")] public float timeMultiplier;
+
     public bool useDelay;
     [EnableIf("useDelay")] public float delayOverall;
     float tempDelay;
@@ -82,7 +83,7 @@ public class UseAnimationKeys : MonoBehaviour
             }
 
             if(progress > 0f){
-                TransformObject();
+                CalculateTransformation();
                 progress -= Time.deltaTime;
             }
             else if(tempLoopDelay > 0) tempLoopDelay -= Time.deltaTime;
@@ -93,23 +94,21 @@ public class UseAnimationKeys : MonoBehaviour
     }
 
     public void PlayAnimation(){
-
-        initialValues = targetObject.transform;
         duration = 0f;  //resets duration
 
         results.Clear();
 
         if(isFirst || isContinuous){GetCurrentTransform(); isFirst = false;}
         
-
         foreach(AnimationComponent component in componentList){
-            if(!timeStretch) timeMultiplier = 1f;
-
+            //Convert component to a child class with temp values
             var serializedComponent = JsonUtility.ToJson(component); 
             ComponentResult c  = JsonUtility.FromJson<ComponentResult>(serializedComponent);
+
+            if(!timeStretch) timeMultiplier = 1f;
             c.MakeTemp(timeMultiplier);
+
             results.Add(c);
-            //CopyComponent(component);
 
             if(duration < (component.duration + component.delay)) duration = (component.duration + component.delay)/1000f;
             duration = progress = duration*timeMultiplier;
@@ -125,17 +124,15 @@ public class UseAnimationKeys : MonoBehaviour
         oldValue[2] = targetObject.transform.localRotation.eulerAngles;
     }
 
-    private void TransformObject(){
+    private void CalculateTransformation(){
 
         Vector3 totalRatio = new Vector3(1f,1f,1f);
         Vector3 totalRelative = new Vector3(0f, 0f, 0f);
         Vector3 totalAngle = new Vector3(0f, 0f, 0f);
-        Vector3 prevAngle = new Vector3(0f, 0f, 0f);
         float componentProgress;
 
         foreach(ComponentResult result in results){
             int flag = (int) result.animType;
-            prevAngle += result.tempRotation;
 
             if(result.tempDelay > 0){
                 result.tempDelay -= Time.deltaTime;
@@ -170,10 +167,14 @@ public class UseAnimationKeys : MonoBehaviour
             else if(flag == 1) totalRelative += result.tempRelative;
             else if(flag ==2) totalAngle += result.tempRotation;
         }
-        targetObject.transform.localScale = Vector3.Scale(oldValue[0], totalRatio);
-        targetObject.transform.localPosition = oldValue[1] + totalRelative; // doing translation this way allows for continous and repeat
-        targetObject.localEulerAngles = oldValue[2] + totalAngle;
+        TransformObject(totalRatio, totalRelative, totalAngle);
 
+    }
+
+    private void TransformObject(Vector3 ratio, Vector3 translation, Vector3 angle){
+        targetObject.transform.localScale = Vector3.Scale(oldValue[0], ratio);
+        targetObject.transform.localPosition = oldValue[1] + translation; // doing translation this way allows for continous and repeat
+        targetObject.localEulerAngles = oldValue[2] + angle;
     }
 
     private void ResetAnimation(List<ComponentResult> components){
