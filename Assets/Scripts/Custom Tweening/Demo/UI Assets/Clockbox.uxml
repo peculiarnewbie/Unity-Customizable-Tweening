@@ -1,0 +1,15 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Scripts/Custom%20Tweening/Demo/UI%20Assets/Clockbox%20style.uss?fileID=7433441132597879392&amp;guid=535c8a9ca5b947a43a47f593203c3542&amp;type=3#Clockbox style" />
+    <ui:VisualElement name="Background" style="height: 274px; width: 1916px; flex-grow: 1; justify-content: center; align-items: flex-start;">
+        <ui:VisualElement name="main-menu" style="height: 448px; width: 381px; background-color: rgb(255, 255, 255); border-top-left-radius: 20px; border-bottom-left-radius: 20px; border-top-right-radius: 20px; border-bottom-right-radius: 20px; justify-content: center; align-items: center; margin-left: 15%;">
+            <ui:Label text="Menu" display-tooltip-when-elided="true" name="label" style="color: rgb(0, 0, 0); font-size: 32px; position: absolute; top: 7%;" />
+            <ui:VisualElement style="margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; width: 65%; height: 15%; justify-content: center; align-items: center;">
+                <ui:Button text="Rotate" display-tooltip-when-elided="true" name="animate-button" class="main-button-style" />
+            </ui:VisualElement>
+            <ui:VisualElement style="margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; width: 65%; height: 15%; justify-content: center; align-items: center;">
+                <ui:Button text="Translate" display-tooltip-when-elided="true" name="ratio-button" class="main-button-style" />
+            </ui:VisualElement>
+            <ui:IMGUIContainer />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

@@ -24,12 +24,12 @@ public class UseAnimationKeys : MonoBehaviour
     [EnableIf("useDelay")] public float delayOverall;
     float tempDelay;
 
-    int stiffness = 3;
-    int bounces = 4;
-    float treshold;
-    float alpha;
-    float limit;
-    float omega;
+    // int stiffness = 3;
+    // int bounces = 4;
+    // float treshold;
+    // float alpha;
+    // float limit;
+    // float omega;
 
     bool isPlaying;
     bool isFirst = true;
@@ -47,10 +47,10 @@ public class UseAnimationKeys : MonoBehaviour
         ease = new EaseMethods();
 
         componentList = animationObject.components;
-        treshold = 0.005f / Mathf.Pow(10, stiffness);
-        alpha = stiffness / 100f;
-        limit = Mathf.Floor(Mathf.Log(treshold) / -alpha);
-        omega = (bounces + 0.5f) * Mathf.PI/limit;
+        // treshold = 0.005f / Mathf.Pow(10, stiffness);
+        // alpha = stiffness / 100f;
+        // limit = Mathf.Floor(Mathf.Log(treshold) / -alpha);
+        // omega = (bounces + 0.5f) * Mathf.PI/limit;
 
         tempLoopDelay = loopDelay;
         tempDelay = delayOverall;
@@ -210,19 +210,19 @@ public class UseAnimationKeys : MonoBehaviour
 
     }
 
-    private float Calculate(float ratio){
-        if(ratio >= 1) return 1;
+    // private float Calculate(float ratio){
+    //     if(ratio >= 1) return 1;
 
-        float t = ratio * limit;
-        return 1 - Exponent(t) * Oscillation(t);
-    }
+    //     float t = ratio * limit;
+    //     return 1 - Exponent(t) * Oscillation(t);
+    // }
 
-    private float Exponent(float t){
-        return Mathf.Pow(Mathf.Epsilon, alpha*t);
-    }
+    // private float Exponent(float t){
+    //     return Mathf.Pow(Mathf.Epsilon, alpha*t);
+    // }
 
-    private float Oscillation(float t){
-        return Mathf.Cos(omega * t);
-    }
+    // private float Oscillation(float t){
+    //     return Mathf.Cos(omega * t);
+    // }
 
 }

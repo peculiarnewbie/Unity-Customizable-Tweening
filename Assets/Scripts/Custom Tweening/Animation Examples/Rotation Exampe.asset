@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e38ac0dff8f318444a3a6e62174b510e, type: 3}
-  m_Name: Animation
+  m_Name: Rotation Exampe
   m_EditorClassIdentifier: 
   components:
   - animType: 2
