@@ -21,7 +21,7 @@ MonoBehaviour:
     Range: {x: 0, y: 0, z: 0}
     xDegree: {x: 0, y: 0}
     yDegree: {x: 0, y: 0}
-    easeType: 300
+    easeType: 400
     duration: 1000
     delay: 0
     bounces: 0

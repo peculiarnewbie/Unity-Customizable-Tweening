@@ -5,22 +5,20 @@ using UnityEngine;
 public class EditorManager : MonoBehaviour
 {
     [SerializeField] GameObject keyPrefab;
-    [SerializeField] AnimationKeys animationObject;
+    public AnimationKeys animationObject;
+    [SerializeField] UseAnimationKeys useAnimationKeys;
+
+    
 
     // Start is called before the first frame update
     void Start()
     {
         for(int i=0; i<animationObject.components.Count; i++){
-            GameObject tempPrefab = Instantiate(keyPrefab, gameObject.transform);
+            Transform content = this.transform.Find("Horizontal/Vertical/Scroll View/Viewport/Content").transform;
+            GameObject tempPrefab = Instantiate(keyPrefab, content);
             EditorComponent temp = tempPrefab.GetComponent<EditorComponent>();
             temp.componentIndex = i;
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public void ChangeValue(int componentIndex){
@@ -33,5 +31,9 @@ public class EditorManager : MonoBehaviour
 
     public void ChangeTransformValue(int componentIndex, int dimension, int value){
         // animationObject.components[componentIndex].
+    }
+
+    public void PlayAnimation(){
+        useAnimationKeys.PlayAnimation();
     }
 }

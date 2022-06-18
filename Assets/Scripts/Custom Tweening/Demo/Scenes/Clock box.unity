@@ -174,7 +174,7 @@ MonoBehaviour:
   loop: 1
   loopDelay: 0
   timeStretch: 0
-  timeMultiplier: 0
+  timeMultiplier: 2
   useDelay: 0
   delayOverall: 0
 --- !u!1 &343091529

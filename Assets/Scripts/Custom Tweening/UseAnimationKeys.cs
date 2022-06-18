@@ -9,8 +9,6 @@ public class UseAnimationKeys : MonoBehaviour
     public Transform targetObject;
     public AnimationKeys animationObject;
 
-    private List<AnimationComponent> componentList;
-
     public bool isContinuous = true;
 
     public bool loop = false;
@@ -24,14 +22,7 @@ public class UseAnimationKeys : MonoBehaviour
     [EnableIf("useDelay")] public float delayOverall;
     float tempDelay;
 
-    // int stiffness = 3;
-    // int bounces = 4;
-    // float treshold;
-    // float alpha;
-    // float limit;
-    // float omega;
-
-    bool isPlaying;
+    private List<AnimationComponent> componentList;
     bool isFirst = true;
     float duration;
     float progress;
@@ -47,34 +38,11 @@ public class UseAnimationKeys : MonoBehaviour
         ease = new EaseMethods();
 
         componentList = animationObject.components;
-        // treshold = 0.005f / Mathf.Pow(10, stiffness);
-        // alpha = stiffness / 100f;
-        // limit = Mathf.Floor(Mathf.Log(treshold) / -alpha);
-        // omega = (bounces + 0.5f) * Mathf.PI/limit;
 
         tempLoopDelay = loopDelay;
         tempDelay = delayOverall;
     }
 
-    // private void Update() {
-    //     if(!isPlaying) return;
-
-    //     //
-    //     if(tempDelay > 0f){
-    //         tempDelay -= Time.deltaTime;
-    //         return;
-    //     }
-
-    //     if(progress > 0f){
-    //         TransformObject();
-    //         progress -= Time.deltaTime;
-    //     }
-    //     else if(tempLoopDelay > 0) tempLoopDelay -= Time.deltaTime;
-    //     else if(loop) ResetAnimation(results);
-    //     else isPlaying = !isPlaying;
-    // }
-
-    // Coroutine version of current Update
     IEnumerator AnimationCoroutine(){
         while(true){
             if(tempDelay > 0f){
@@ -143,7 +111,6 @@ public class UseAnimationKeys : MonoBehaviour
                 if(result.tempDuration < 0){result.tempDuration = 0f; result.notLast = false;}
                 if(last) componentProgress = 1f;
                 else componentProgress = (result.duration - result.tempDuration) / (result.duration);
-                Debug.Log(componentProgress);
                 result.tempDuration -= Time.deltaTime;
 
                 switch(result.animType){
