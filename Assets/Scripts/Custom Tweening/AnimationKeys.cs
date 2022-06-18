@@ -54,7 +54,7 @@ public class AnimationComponent{
     [ShowIf("animType", AnimationTypes.Skew)][AllowNesting] public Vector2 xDegree = new Vector2(0f,20f);
     [ShowIf("animType", AnimationTypes.Skew)][AllowNesting] public Vector2 yDegree = new Vector2(0f,0f);
 
-    public EasingTypes easeType;
+    public EaseTypes easeType;
 
     [Label("Duration (ms)")][AllowNesting] public float duration = 1000f;
     [Label("Delay (ms)")][AllowNesting] public float delay = 0f;
@@ -69,12 +69,4 @@ public enum AnimationTypes
     Translate,
     Rotate,
     Skew
-}
-
-public enum EasingTypes
-{
-    Bounce,
-    Sway,
-    HardBounce,
-    HardSway
 }

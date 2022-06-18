@@ -41,7 +41,7 @@ public class UseAnimationKeys : MonoBehaviour
     List<float> componentDuration = new List<float>();
     List<float> componentDelay = new List<float>();
     List<ComponentResult> results = new List<ComponentResult>();
-    Coroutine animationCo;
+    Coroutine animationCoroutine;
 
     private void Start() {
         ease = new EaseMethods();
@@ -82,8 +82,9 @@ public class UseAnimationKeys : MonoBehaviour
                 yield return null;
             }
 
-            if(progress > 0f){
-                CalculateTransformation();
+            if(progress > -1f){
+                if(progress < 0f) {progress = -2f; CalculateTransformation(true);}
+                else CalculateTransformation(false);
                 progress -= Time.deltaTime;
             }
             else if(tempLoopDelay > 0) tempLoopDelay -= Time.deltaTime;
@@ -96,9 +97,9 @@ public class UseAnimationKeys : MonoBehaviour
     public void PlayAnimation(){
         duration = 0f;  //resets duration
 
-        results.Clear();
+        results.Clear(); //clear keys
 
-        if(isFirst || isContinuous){GetCurrentTransform(); isFirst = false;}
+        if(isFirst || isContinuous){GetCurrentTransform(); isFirst = false;} //get transform reference
         
         foreach(AnimationComponent component in componentList){
             //Convert component to a child class with temp values
@@ -114,8 +115,8 @@ public class UseAnimationKeys : MonoBehaviour
             duration = progress = duration*timeMultiplier;
         }
         
-        if(animationCo != null) StopCoroutine(animationCo);
-        animationCo = StartCoroutine(AnimationCoroutine());
+        if(animationCoroutine != null) StopCoroutine(animationCoroutine);
+        animationCoroutine = StartCoroutine(AnimationCoroutine());
     }
 
     private void GetCurrentTransform(){
@@ -124,7 +125,7 @@ public class UseAnimationKeys : MonoBehaviour
         oldValue[2] = targetObject.transform.localRotation.eulerAngles;
     }
 
-    private void CalculateTransformation(){
+    private void CalculateTransformation(bool last){
 
         Vector3 totalRatio = new Vector3(1f,1f,1f);
         Vector3 totalRelative = new Vector3(0f, 0f, 0f);
@@ -138,21 +139,23 @@ public class UseAnimationKeys : MonoBehaviour
                 result.tempDelay -= Time.deltaTime;
                 continue;
             } 
-            else if(result.tempDuration > 0){
-
-                componentProgress = (result.duration - result.tempDuration) / (result.duration);
+            else if(result.tempDuration > 0 || result.notLast){
+                if(result.tempDuration < 0){result.tempDuration = 0f; result.notLast = false;}
+                if(last) componentProgress = 1f;
+                else componentProgress = (result.duration - result.tempDuration) / (result.duration);
+                Debug.Log(componentProgress);
                 result.tempDuration -= Time.deltaTime;
 
                 switch(result.animType){
                     case AnimationTypes.Scale: 
-                        result.tempRatio = Vector3.LerpUnclamped(Vector3.one, result.ratio, ease.Smooth(EaseTypes.Elastic, componentProgress));
+                        result.tempRatio = Vector3.LerpUnclamped(Vector3.one, result.ratio, ease.Smooth(result.easeType, componentProgress));
                     break;
                     case AnimationTypes.Translate: 
-                        result.tempRelative = Vector3.LerpUnclamped(Vector3.zero, result.relativePosition, ease.Smooth(EaseTypes.Elastic, componentProgress));
+                        result.tempRelative = Vector3.LerpUnclamped(Vector3.zero, result.relativePosition, ease.Smooth(result.easeType, componentProgress));
                         flag = 1;
                     break;
                     case AnimationTypes.Rotate:
-                        result.tempRotation = Vector3.LerpUnclamped(Vector3.zero, result.degrees, ease.Smooth(EaseTypes.Elastic, componentProgress));
+                        result.tempRotation = Vector3.LerpUnclamped(Vector3.zero, result.degrees, ease.Smooth(result.easeType, componentProgress));
                         flag = 2;
                     break;
                     case AnimationTypes.Skew:
@@ -195,6 +198,8 @@ public class UseAnimationKeys : MonoBehaviour
         public Vector3 tempRatio = new Vector3(1f, 1f, 1f);
         public Vector3 tempRotation = new Vector3(0f, 0f, 0f);
 
+        public bool notLast = true;
+
         public void MakeTemp(float multiplier){
             duration = duration*multiplier/1000f;
             delay = delay*multiplier/1000f;
@@ -206,6 +211,7 @@ public class UseAnimationKeys : MonoBehaviour
             tempRatio = ratio;
             tempRelative = relativePosition;
             tempRotation = degrees;
+            notLast = true;
         }
 
     }
