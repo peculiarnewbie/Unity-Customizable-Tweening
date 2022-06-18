@@ -14,32 +14,38 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   components:
   - animType: 2
+    isRandom: 0
     ratio: {x: 2, y: 2, z: 1}
     relativePosition: {x: 0, y: 0, z: 0}
     degrees: {x: 0, y: 90, z: 40}
+    Range: {x: 0, y: 0, z: 0}
     xDegree: {x: 0, y: 20}
     yDegree: {x: 0, y: 0}
-    easeType: 0
+    easeType: 300
     duration: 1000
     delay: 0
     bounces: 4
     stiffness: 3
   - animType: 2
+    isRandom: 0
     ratio: {x: 2, y: 2, z: 1}
     relativePosition: {x: 0, y: 0, z: 0}
     degrees: {x: 20, y: 0, z: 40}
+    Range: {x: 0, y: 0, z: 0}
     xDegree: {x: 0, y: 20}
     yDegree: {x: 0, y: 0}
-    easeType: 0
+    easeType: 300
     duration: 1000
     delay: 500
     bounces: 4
     stiffness: 3
   defaultVaules:
     animType: 0
+    isRandom: 0
     ratio: {x: 1, y: 2, z: 1}
     relativePosition: {x: 0, y: 100, z: 0}
     degrees: {x: 0, y: 90, z: 0}
+    Range: {x: 0, y: 0, z: 0}
     xDegree: {x: 0, y: 20}
     yDegree: {x: 0, y: 0}
     easeType: 0
