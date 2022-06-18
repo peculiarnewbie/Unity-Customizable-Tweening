@@ -339,9 +339,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetObject: {fileID: 494280002}
-  animationObject: {fileID: 11400000, guid: 805d4efcc93bd0e43b90c4f4df2f37f6, type: 2}
+  animationObject: {fileID: 11400000, guid: a0b26a952db465146a30ed169b4a1e8a, type: 2}
   isContinuous: 0
-  loop: 1
+  loop: 0
   loopDelay: 0.1
   timeStretch: 0
   timeMultiplier: 0

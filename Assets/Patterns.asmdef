@@ -3,7 +3,8 @@
     "rootNamespace": "",
     "references": [
         "UnityEngine.UIElementsModule",
-        "NaughtyAttributes.Core"
+        "NaughtyAttributes.Core",
+        "Unity.TextMeshPro"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

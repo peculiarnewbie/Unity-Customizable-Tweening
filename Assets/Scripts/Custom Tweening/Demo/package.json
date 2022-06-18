@@ -1,0 +1,7 @@
+{
+    "name": "com.bolt.customtween",
+    "displayName": "Custom Tween",
+    "version": "0.1",
+    "unity": "2021.2",
+    "description": "WIP of a simplified and more customizable tweener"
+}
