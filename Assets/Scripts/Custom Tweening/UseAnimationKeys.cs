@@ -120,8 +120,8 @@ public class UseAnimationKeys : MonoBehaviour
                 result.tempDuration -= Time.deltaTime;
 
                 // if scale, start from 1 not 0
-                if(result.animType == AnimationTypes.Scale) result.tempValue = Vector3.LerpUnclamped(Vector3.one, result.values, ease.Smooth(result.easeType, componentProgress));
-                else result.tempValue = Vector3.LerpUnclamped(Vector3.zero, result.values, ease.Smooth(result.easeType, componentProgress));
+                if(result.animType == AnimationTypes.Scale) result.tempValue = Vector3.LerpUnclamped(Vector3.one, result.values, ease.Easing(result.easeType, componentProgress));
+                else result.tempValue = Vector3.LerpUnclamped(Vector3.zero, result.values, ease.Easing(result.easeType, componentProgress));
 
                 switch(result.animType){
                     case AnimationTypes.Scale: 

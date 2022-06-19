@@ -6,54 +6,39 @@ using UnityEngine;
     /// <summary>This enum allows you to pick the ease type used by most transition methods.</summary>
 public enum EaseTypes
 {
-    // Basic
+    // basic
+
     Linear,
-    Smooth     = 100,
-    Accelerate = 200,
-    Decelerate = 250,
-    Elastic    = 300,
-    Back       = 400,
-    Bounce     = 500,
+    EasyEase,
+    Elastic,
+    Back,
 
-    // Advanced
-    SineIn = 1000,
-    SineOut,
-    SineInOut,
+    // advanced
 
-    QuadIn = 1100,
-    QuadOut,
-    QuadInOut,
+    PolyIn,
+    PolyOut,
+    PolyInOut,
 
-    CubicIn = 1200,
-    CubicOut,
-    CubicInOut,
+    ExpIn,
+    ExpOut,
+    ExpInOut,
 
-    QuartIn = 1300,
-    QuartOut,
-    QuartInOut,
+    SinIn,
+    SinOut,
+    SinInOut,
 
-    QuintIn = 1400,
-    QuintOut,
-    QuintInOut,
+    CircleIn,
+    CircleOut,
+    CircleInOut,
 
-    ExpoIn = 1500,
-    ExpoOut,
-    ExpoInOut,
-
-    CircIn = 1600,
-    CircOut,
-    CircInOut,
-
-    BackIn = 1700,
-    BackOut,
-    BackInOut,
-
-    ElasticIn = 1800,
+    ElasticIn,
     ElasticOut,
     ElasticInOut,
 
-    BounceIn = 1900,
-    BounceOut,
-    BounceInOut,
+    BackIn,
+    BackOut,
+    BackInOut,
+
+    AlternateElastic,
 }
 
