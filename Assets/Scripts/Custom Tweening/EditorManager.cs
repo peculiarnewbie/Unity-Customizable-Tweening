@@ -6,7 +6,7 @@ public class EditorManager : MonoBehaviour
 {
     [SerializeField] GameObject keyPrefab;
     public AnimationKeys animationObject;
-    [SerializeField] UseAnimationKeys useAnimationKeys;
+    public UseAnimationKeys useAnimationKeys;
 
     
 
