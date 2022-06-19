@@ -18,11 +18,7 @@ public class AnimationKeys : ScriptableObject
 
 [System.Serializable]
 public class AnimationComponent{
-    // [Dropdown("AnimationType")]
-    // public string animationType;
-
-    // private List<string> AnimationType { get { return new List<string>() { "Scale", "Translate", "Rotate", "Skew" }; } }
-
+    
     public AnimationTypes animType;
     public Vector3 values = new Vector3(0f,0f, 0f);
 
@@ -70,6 +66,5 @@ public enum AnimationTypes
 {
     Scale,
     Translate,
-    Rotate,
-    Skew
+    Rotate
 }

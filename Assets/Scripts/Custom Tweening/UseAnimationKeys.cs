@@ -36,6 +36,8 @@ public class UseAnimationKeys : MonoBehaviour
     List<ComponentResult> results = new List<ComponentResult>();
     Coroutine animationCoroutine;
 
+    public bool isPlaying;
+
     private void Start() {
         ease = new EaseMethods();
 
@@ -73,6 +75,7 @@ public class UseAnimationKeys : MonoBehaviour
         
         if(animationCoroutine != null) StopCoroutine(animationCoroutine);
         animationCoroutine = StartCoroutine(AnimationCoroutine());
+        isPlaying = true;
     }
 
     private void GetCurrentTransform(){
@@ -85,7 +88,6 @@ public class UseAnimationKeys : MonoBehaviour
         while(true){
             if(tempDelayOverall > 0f && useDelay){
                 tempDelayOverall -= Time.deltaTime;
-                yield return null;
             }
 
             else if(progress > -1f){
@@ -95,9 +97,13 @@ public class UseAnimationKeys : MonoBehaviour
             }
             else if(tempLoopDelay > 0) tempLoopDelay -= Time.deltaTime;
             else if(loop) ResetAnimation(results);
-            else yield break;
+            else{
+                isPlaying = false;
+                yield break;
+            } 
             yield return null;
         }
+        
     }
 
     private void CalculateTransformation(){
@@ -152,7 +158,6 @@ public class UseAnimationKeys : MonoBehaviour
         }
         progress = totalDuration;
         tempLoopDelay = loopDelay;
-        tempDelayOverall = delayOverall;
         if(isContinuous) GetCurrentTransform();
     }
 
