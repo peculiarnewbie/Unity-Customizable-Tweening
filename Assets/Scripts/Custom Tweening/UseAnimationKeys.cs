@@ -9,6 +9,8 @@ public class UseAnimationKeys : MonoBehaviour
     public Transform targetObject;
     public AnimationKeys animationObject;
 
+    public bool playOnStart = false;
+
     public bool isContinuous = true;
 
     public bool loop = false;
@@ -20,11 +22,11 @@ public class UseAnimationKeys : MonoBehaviour
 
     public bool useDelay;
     [EnableIf("useDelay")] public float delayOverall;
-    float tempDelay;
+    float tempDelayOverall;
 
     private List<AnimationComponent> componentList;
     bool isFirst = true;
-    float duration;
+    float totalDuration;
     float progress;
     Transform initialValues;
     Vector3[] oldValue = new Vector3[4];
@@ -40,37 +42,21 @@ public class UseAnimationKeys : MonoBehaviour
         componentList = animationObject.components;
 
         tempLoopDelay = loopDelay;
-        tempDelay = delayOverall;
-    }
+        tempDelayOverall = delayOverall;
 
-    IEnumerator AnimationCoroutine(){
-        while(true){
-            if(tempDelay > 0f){
-                tempDelay -= Time.deltaTime;
-                yield return null;
-            }
-
-            if(progress > -1f){
-                if(progress < 0f) {progress = -2f; CalculateTransformation(true);}
-                else CalculateTransformation(false);
-                progress -= Time.deltaTime;
-            }
-            else if(tempLoopDelay > 0) tempLoopDelay -= Time.deltaTime;
-            else if(loop) ResetAnimation(results);
-            else yield break;
-            yield return null;
-        }
+        if(playOnStart) PlayAnimation();
     }
 
     public void PlayAnimation(){
-        duration = 0f;  //resets duration
+        totalDuration = 0f;  //resets duration
+        tempDelayOverall = delayOverall;
 
         results.Clear(); //clear keys
 
         if(isFirst || isContinuous){GetCurrentTransform(); isFirst = false;} //get transform reference
         
+        //Convert component to a child class with temp values
         foreach(AnimationComponent component in componentList){
-            //Convert component to a child class with temp values
             var serializedComponent = JsonUtility.ToJson(component); 
             ComponentResult c  = JsonUtility.FromJson<ComponentResult>(serializedComponent);
 
@@ -79,9 +65,11 @@ public class UseAnimationKeys : MonoBehaviour
 
             results.Add(c);
 
-            if(duration < (component.duration + component.delay)) duration = (component.duration + component.delay)/1000f;
-            duration = progress = duration*timeMultiplier;
+            if(totalDuration < (component.duration + component.delay)/1000) totalDuration = (component.duration + component.delay)/1000f;
+            
         }
+
+        totalDuration = progress = totalDuration*timeMultiplier;
         
         if(animationCoroutine != null) StopCoroutine(animationCoroutine);
         animationCoroutine = StartCoroutine(AnimationCoroutine());
@@ -93,7 +81,26 @@ public class UseAnimationKeys : MonoBehaviour
         oldValue[2] = targetObject.transform.localRotation.eulerAngles;
     }
 
-    private void CalculateTransformation(bool last){
+    IEnumerator AnimationCoroutine(){
+        while(true){
+            if(tempDelayOverall > 0f && useDelay){
+                tempDelayOverall -= Time.deltaTime;
+                yield return null;
+            }
+
+            else if(progress > -1f){
+                if(progress < 0f) {progress = -2f;} // one more frame after reaching zero
+                CalculateTransformation();
+                progress -= Time.deltaTime;
+            }
+            else if(tempLoopDelay > 0) tempLoopDelay -= Time.deltaTime;
+            else if(loop) ResetAnimation(results);
+            else yield break;
+            yield return null;
+        }
+    }
+
+    private void CalculateTransformation(){
 
         Vector3 totalRatio = new Vector3(1f,1f,1f);
         Vector3 totalRelative = new Vector3(0f, 0f, 0f);
@@ -101,41 +108,33 @@ public class UseAnimationKeys : MonoBehaviour
         float componentProgress;
 
         foreach(ComponentResult result in results){
-            int flag = (int) result.animType;
 
             if(result.tempDelay > 0){
                 result.tempDelay -= Time.deltaTime;
                 continue;
             } 
-            else if(result.tempDuration > 0 || result.notLast){
-                if(result.tempDuration < 0){result.tempDuration = 0f; result.notLast = false;}
-                if(last) componentProgress = 1f;
+            else{
+                if(result.tempDuration < 0) componentProgress = 1f; // make sure doesn't overshoot and went back
+                // if(last) componentProgress = 1f;
                 else componentProgress = (result.duration - result.tempDuration) / (result.duration);
                 result.tempDuration -= Time.deltaTime;
 
+                // if scale, start from 1 not 0
+                if(result.animType == AnimationTypes.Scale) result.tempValue = Vector3.LerpUnclamped(Vector3.one, result.values, ease.Smooth(result.easeType, componentProgress));
+                else result.tempValue = Vector3.LerpUnclamped(Vector3.zero, result.values, ease.Smooth(result.easeType, componentProgress));
+
                 switch(result.animType){
                     case AnimationTypes.Scale: 
-                        result.tempRatio = Vector3.LerpUnclamped(Vector3.one, result.ratio, ease.Smooth(result.easeType, componentProgress));
+                        totalRatio = Vector3.Scale(totalRatio, result.tempValue);
                     break;
                     case AnimationTypes.Translate: 
-                        result.tempRelative = Vector3.LerpUnclamped(Vector3.zero, result.relativePosition, ease.Smooth(result.easeType, componentProgress));
-                        flag = 1;
+                        totalRelative += result.tempValue;
                     break;
                     case AnimationTypes.Rotate:
-                        result.tempRotation = Vector3.LerpUnclamped(Vector3.zero, result.degrees, ease.Smooth(result.easeType, componentProgress));
-                        flag = 2;
-                    break;
-                    case AnimationTypes.Skew:
-                    { 
-                        
-                    }
+                        totalAngle += result.tempValue;
                     break;
                 }
-
             }
-            if(flag == 0) totalRatio = Vector3.Scale(totalRatio, result.tempRatio);
-            else if(flag == 1) totalRelative += result.tempRelative;
-            else if(flag ==2) totalAngle += result.tempRotation;
         }
         TransformObject(totalRatio, totalRelative, totalAngle);
 
@@ -151,9 +150,9 @@ public class UseAnimationKeys : MonoBehaviour
         foreach(ComponentResult component in components){
             component.ResetTemp();
         }
-        progress = duration;
+        progress = totalDuration;
         tempLoopDelay = loopDelay;
-        tempDelay = delayOverall;
+        tempDelayOverall = delayOverall;
         if(isContinuous) GetCurrentTransform();
     }
 
@@ -161,11 +160,7 @@ public class UseAnimationKeys : MonoBehaviour
     public class ComponentResult : AnimationComponent{
         public float tempDuration;
         public float tempDelay;
-        public Vector3 tempRelative = new Vector3(0f, 0f, 0f);
-        public Vector3 tempRatio = new Vector3(1f, 1f, 1f);
-        public Vector3 tempRotation = new Vector3(0f, 0f, 0f);
-
-        public bool notLast = true;
+        public Vector3 tempValue = new Vector3(0f, 0f, 0f);
 
         public void MakeTemp(float multiplier){
             duration = duration*multiplier/1000f;
@@ -175,10 +170,7 @@ public class UseAnimationKeys : MonoBehaviour
         public void ResetTemp(){
             tempDuration = duration;
             tempDelay = delay;
-            tempRatio = ratio;
-            tempRelative = relativePosition;
-            tempRotation = degrees;
-            notLast = true;
+            tempValue = values;
         }
 
     }

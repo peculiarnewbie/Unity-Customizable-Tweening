@@ -13,43 +13,102 @@ MonoBehaviour:
   m_Name: Placed
   m_EditorClassIdentifier: 
   components:
-  - animType: 1
+  - animType: 2
+    values: {x: -90, y: 0, z: 0}
     isRandom: 0
-    ratio: {x: 0.5, y: 0.5, z: 0.5}
-    relativePosition: {x: 0, y: 0, z: 0}
-    degrees: {x: 0, y: 0, z: 0}
     Range: {x: 0, y: 0, z: 0}
-    xDegree: {x: 0, y: 0}
-    yDegree: {x: 0, y: 0}
+    easeType: 100
+    duration: 1
+    delay: 0
+  - animType: 1
+    values: {x: 0, y: 0.5, z: 0}
+    isRandom: 0
+    Range: {x: 0, y: 0, z: 0}
+    easeType: 100
+    duration: 800
+    delay: 0
+  - animType: 2
+    values: {x: 90, y: 0, z: 90}
+    isRandom: 0
+    Range: {x: 0, y: 0, z: 0}
+    easeType: 1101
+    duration: 600
+    delay: 0
+  - animType: 2
+    values: {x: 0, y: 10, z: 0}
+    isRandom: 0
+    Range: {x: 0, y: 0, z: 0}
+    easeType: 100
+    duration: 600
+    delay: 500
+  - animType: 2
+    values: {x: 0, y: -20, z: 0}
+    isRandom: 0
+    Range: {x: 0, y: 0, z: 0}
+    easeType: 100
+    duration: 800
+    delay: 1100
+  - animType: 1
+    values: {x: 0.2, y: 0, z: 0}
+    isRandom: 0
+    Range: {x: 0, y: 0, z: 0}
+    easeType: 100
+    duration: 500
+    delay: 1200
+  - animType: 1
+    values: {x: -1, y: 0, z: 0}
+    isRandom: 0
+    Range: {x: 0, y: 0, z: 0}
+    easeType: 100
+    duration: 1000
+    delay: 1700
+  - animType: 1
+    values: {x: 0, y: 1, z: 0}
+    isRandom: 0
+    Range: {x: 0, y: 0, z: 0}
+    easeType: 1602
+    duration: 2000
+    delay: 1700
+  - animType: 2
+    values: {x: 0, y: 10, z: -180}
+    isRandom: 0
+    Range: {x: 0, y: 0, z: 0}
+    easeType: 1602
+    duration: 2000
+    delay: 1700
+  - animType: 0
+    values: {x: 2, y: 2, z: 2}
+    isRandom: 0
+    Range: {x: 0, y: 0, z: 0}
+    easeType: 1600
+    duration: 1000
+    delay: 1700
+  - animType: 1
+    values: {x: 0.8, y: 0, z: 0}
+    isRandom: 0
+    Range: {x: 0, y: 0, z: 0}
+    easeType: 1101
+    duration: 1000
+    delay: 2700
+  - animType: 0
+    values: {x: 0.5, y: 0.5, z: 0.5}
+    isRandom: 0
+    Range: {x: 0, y: 0, z: 0}
     easeType: 300
     duration: 1000
-    delay: 0
-    bounces: 0
-    stiffness: 0
-  - animType: 0
+    delay: 3500
+  - animType: 1
+    values: {x: 0, y: -1.5, z: 0}
     isRandom: 0
-    ratio: {x: 2, y: 2, z: 2}
-    relativePosition: {x: 0, y: 0, z: 0}
-    degrees: {x: 0, y: 0, z: 0}
     Range: {x: 0, y: 0, z: 0}
-    xDegree: {x: 0, y: 0}
-    yDegree: {x: 0, y: 0}
     easeType: 300
-    duration: 500
-    delay: 995
-    bounces: 0
-    stiffness: 0
+    duration: 1000
+    delay: 4000
   defaultVaules:
     animType: 0
+    values: {x: 0, y: 0, z: 0}
     isRandom: 0
-    ratio: {x: 1, y: 1, z: 1}
-    relativePosition: {x: 0, y: 0, z: 0}
-    degrees: {x: 0, y: 90, z: 0}
     Range: {x: 0, y: 0, z: 0}
-    xDegree: {x: 0, y: 20}
-    yDegree: {x: 0, y: 0}
     easeType: 0
     duration: 1000
     delay: 0
-    bounces: 4
-    stiffness: 3

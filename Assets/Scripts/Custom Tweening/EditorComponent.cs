@@ -56,9 +56,9 @@ public class EditorComponent : MonoBehaviour
     void InitializeValues(){
         animationTypeDropdown.value = (int) component.animType;
 
-        transformValueX.text = component.relativePosition.x.ToString();
-        transformValueY.text = component.relativePosition.y.ToString();
-        transformValueZ.text = component.relativePosition.z.ToString();
+        transformValueX.text = component.values.x.ToString();
+        transformValueY.text = component.values.y.ToString();
+        transformValueZ.text = component.values.z.ToString();
 
     }
 
